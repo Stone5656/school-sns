@@ -9,5 +9,3 @@ RUN npm i -g pnpm
 RUN echo 'node ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 USER node
-
-WORKDIR /app

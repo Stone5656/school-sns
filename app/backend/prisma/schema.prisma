@@ -16,14 +16,9 @@ enum UserRole {
   TEACHER
 }
 
-enum BlogStatus {
+enum ArtifactStatus {
   DRAFT
   PUBLISHED
-}
-
-enum ScrapStatus {
-  OPEN
-  CLOSED
 }
 
 model Users {
@@ -40,9 +35,9 @@ model Users {
   worldMembers WorldMembers[]
 
   userFollowerRelationships UserRelationships[] @relation("follower")
-  userFollowedRelationships UserRelationships[] @relation("followed")
+  userFolloweeRelationships UserRelationships[] @relation("followee")
 
-  blogs Blogs[]
+  artifacts Artifacts[]
 
   scraps Scraps[]
 
@@ -57,8 +52,8 @@ model UserRelationships {
   id String @id @default(uuid(4))
   follower Users @relation("follower", fields: [followerId], references: [id])
   followerId String
-  followed Users @relation("followed", fields: [followedId], references: [id])
-  followedId String
+  followee Users @relation("followee", fields: [followeeId], references: [id])
+  followeeId String
   createdAt DateTime @default(now())
 }
 
@@ -81,21 +76,21 @@ model WorldMembers {
   joinedAt DateTime @default(now())
 }
 
-model Blogs {
+model Artifacts {
   id String @id @default(uuid(4))
   user Users @relation(fields: [userId], references: [id])
   userId String
   title String
   body String
   summaryByAI String
-  status BlogStatus @default(DRAFT)
+  status ArtifactStatus @default(DRAFT)
   publishedAt DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   comments Comments[]
 
-  tagBlogs TagBlogs[]
+  tagArticles TagArticles[]
 
   mentions Mentions[]
 }
@@ -108,7 +103,6 @@ model Scraps {
   userId String
   title String
   body String
-  status ScrapStatus?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -121,8 +115,8 @@ model Comments {
   id String @id @default(uuid(4))
   user Users @relation(fields: [userId], references: [id])
   userId String
-  blog Blogs @relation(fields: [blogId], references: [id])
-  blogId String
+  artifact Artifacts @relation(fields: [artifactId], references: [id])
+  artifactId String
   body String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -135,15 +129,15 @@ model Tags {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tagBlogs TagBlogs[]
+  tagArticles TagArticles[]
 
   tagScraps TagScraps[]
 }
 
-model TagBlogs {
+model TagArticles {
   id String @id @default(uuid(4))
-  blog Blogs @relation(fields: [blogId], references: [id])
-  blogId String
+  artifact Artifacts @relation(fields: [artifactId], references: [id])
+  artifactId String
   tag Tags @relation(fields: [tagId], references: [id])
   tagId String
   createdAt DateTime @default(now())
@@ -162,8 +156,8 @@ model Assets {
 
 model Mentions {
   id String @id @default(uuid(4))
-  blog Blogs @relation(fields: [blogId], references: [id])
-  blogId String
+  artifact Artifacts @relation(fields: [artifactId], references: [id])
+  artifactId String
   user Users @relation(fields: [mentionedUserId], references: [id])
   mentionedUserId String
   createdAt DateTime @default(now())
