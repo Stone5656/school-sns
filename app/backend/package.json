@@ -20,7 +20,8 @@
     "@prisma/client": "^7.2.0",
     "dotenv": "^17.2.3",
     "hono": "^4.11.0",
-    "hono-openapi": "^1.1.2"
+    "hono-openapi": "^1.1.2",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@hono/eslint-config": "^2.0.3",
@@ -30,7 +31,6 @@
     "prettier": "catalog:",
     "prisma": "^7.2.0",
     "tsx": "^4.7.1",
-    "typescript": "catalog:",
-    "zod": "^4.2.1"
+    "typescript": "catalog:"
   }
 }
