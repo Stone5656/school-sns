@@ -22,14 +22,20 @@ export function getLangChainLLMConfig() {
   const apiKey = LLM_API_KEYS[LLM_PROVIDER]
   let llm: BaseChatModel
 
-  if (LLM_PROVIDER !== 'fake' && !apiKey) {
+  if (!(LLM_PROVIDER in LLM_MODELS)) {
+    throw new Error(
+      `Unsupported LLM provider: ${LLM_PROVIDER}. Supported providers are: ${Object.keys(LLM_MODELS).join(', ')}`,
+    )
+  } else if (!(LLM_PROVIDER in LLM_API_KEYS)) {
+    throw new Error(`API key for ${LLM_PROVIDER} is not configured properly`)
+  } else if (LLM_PROVIDER !== 'fake' && !apiKey) {
     throw new Error(`API key for ${LLM_PROVIDER} is not set`)
   }
 
   if (LLM_PROVIDER === 'google') {
     llm = new ChatGoogleGenerativeAI({
-      model: model,
-      apiKey: apiKey,
+      model,
+      apiKey,
     })
   } else {
     // デフォルトのフェイクモデル設定
@@ -38,3 +44,5 @@ export function getLangChainLLMConfig() {
 
   return llm
 }
+
+export const llm = getLangChainLLMConfig()
