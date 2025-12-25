@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { summarizePost } from './lib/langchain/index.js'
 
-const app = new Hono()
+export const app = new Hono()
   .use(
     '*',
     cors({
