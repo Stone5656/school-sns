@@ -7,8 +7,9 @@ import type { app } from '../index.js'
 import { loginSchema, signupSchema, authResponseSchema } from './schema.js'
 
 type Variables = JwtVariables
+const JWT_SECRET = process.env.JWT_SECRET ?? 'it-is-very-secret'
 
-const authCheck = jwt({ secret: 'it-is-very-secret' })
+const authCheck = jwt({ secret: JWT_SECRET })
 
 export const auth = new Hono<{ Variables: Variables }>()
   .post(
