@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { describeRoute, resolver, validator } from 'hono-openapi'
 import z from 'zod'
+import { auth } from './auth/index.js'
 import { demoQuerySchema, demoResponseSchema } from './schema.js'
 
 export const app = new Hono()
@@ -55,5 +56,6 @@ export const app = new Hono()
       }
     },
   )
+  .route('/auth', auth)
 
 export type AppType = typeof app
