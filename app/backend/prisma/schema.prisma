@@ -84,13 +84,13 @@ model Artifacts {
   userId String
   title String
   body String
-  summaryByAI String
+  summaryByAI String?
   status ArtifactStatus @default(DRAFT)
   publishedAt DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tagArticles TagArtifacts[]
+  tagArtifacts TagArtifacts[]
 
   mentions Mentions[]
 }
