@@ -122,6 +122,12 @@ export const users = new Hono<{ Variables: AuthVariables }>()
             },
           },
         },
+        400: {
+          description: 'Cannot follow self',
+        },
+        409: {
+          description: 'Already following the user',
+        },
       },
     }),
     checkAuth,
@@ -172,15 +178,35 @@ export const users = new Hono<{ Variables: AuthVariables }>()
       )
     },
   )
-  .get('/:userId/followers', async (c) => {
-    const { userId } = c.req.param()
-    const result = await usersService.getFollowers(userId)
+  .get(
+    '/:userId/followers',
+    describeRoute({
+      tags: ['Users'],
+      description: 'Get the list of users who follow the specified user',
+      responses: {
+        200: {
+          description: 'Successful Response',
+          content: {
+            'application/json': {
+              schema: resolver(z.array(getUserDetailResponseSchema)),
+            },
+          },
+        },
+        500: {
+          description: 'Unexpected error occurred',
+        },
+      },
+    }),
+    async (c) => {
+      const { userId } = c.req.param()
+      const result = await usersService.getFollowers(userId)
 
-    if (result.type === 'Failure') {
-      return c.json({ message: 'Unexpected error occurred' }, 500)
-    }
-    return c.json(result.value, 200)
-  })
+      if (result.type === 'Failure') {
+        return c.json({ message: 'Unexpected error occurred' }, 500)
+      }
+      return c.json(result.value, 200)
+    },
+  )
   .get(
     '/:userId/following',
     describeRoute({
