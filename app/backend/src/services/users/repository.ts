@@ -25,6 +25,21 @@ export const usersRepository = {
       },
     })
   },
+  isFollowed: async (userId: string, targetUserId: string) => {
+    return (
+      (await prisma.userRelationships.findUnique({
+        where: {
+          followerId_followeeId: {
+            followerId: userId,
+            followeeId: targetUserId,
+          },
+        },
+        select: {
+          followerId: true,
+        },
+      })) !== null
+    )
+  },
   cancelFollower: async (userId: string, targetUserId: string) => {
     await prisma.userRelationships.deleteMany({
       where: {

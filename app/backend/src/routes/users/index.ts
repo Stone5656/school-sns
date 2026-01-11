@@ -3,6 +3,7 @@ import { describeRoute, resolver, validator } from 'hono-openapi'
 import z from 'zod'
 import { checkAuth } from '../../middleware/checkAuth.js'
 import type { Variables as AuthVariables } from '../../middleware/checkAuth.js'
+import { CannotFollowSelfError } from '../../services/users/error.js'
 import { usersService } from '../../services/users/index.js'
 import {
   editUserRequestSchema,
@@ -127,7 +128,13 @@ export const users = new Hono<{ Variables: AuthVariables }>()
     async (c) => {
       const { userId: targetUserId } = c.req.param()
       const userId = c.get('userId')
-      await usersService.followUser(userId, targetUserId)
+      const result = await usersService.followUser(userId, targetUserId)
+      if (result.type === 'Failure') {
+        return c.json(
+          { message: result.error.message },
+          result.error instanceof CannotFollowSelfError ? 400 : 409,
+        )
+      }
       return c.json(
         {
           message: 'Successfully followed the user',

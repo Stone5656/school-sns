@@ -1,5 +1,9 @@
 import { Result } from '@praha/byethrow'
-import { UserNotFoundError } from './error.js'
+import {
+  AlreadyFollowingError,
+  CannotFollowSelfError,
+  UserNotFoundError,
+} from './error.js'
 import { usersRepository } from './repository.js'
 import type { EditUserInfo } from './type.js'
 
@@ -16,6 +20,14 @@ export const usersService = {
     return Result.succeed(updatedUser)
   },
   followUser: async (userId: string, targetUserId: string) => {
+    if (userId === targetUserId) {
+      return Result.fail(new CannotFollowSelfError(userId))
+    }
+
+    if (await usersRepository.isFollowed(userId, targetUserId)) {
+      return Result.fail(new AlreadyFollowingError(userId, targetUserId))
+    }
+
     await usersRepository.followUser(userId, targetUserId)
     return Result.succeed(undefined)
   },

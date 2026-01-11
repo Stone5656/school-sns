@@ -5,6 +5,13 @@ class UserNotFoundError extends Error {
   }
 }
 
+class CannotFollowSelfError extends Error {
+  constructor(userId: string) {
+    super(`User with ID ${userId} cannot follow themselves.`)
+    this.name = 'CannotFollowSelfError'
+  }
+}
+
 class AlreadyFollowingError extends Error {
   constructor(userId: string, targetUserId: string) {
     super(
@@ -14,4 +21,4 @@ class AlreadyFollowingError extends Error {
   }
 }
 
-export { AlreadyFollowingError, UserNotFoundError }
+export { AlreadyFollowingError, CannotFollowSelfError, UserNotFoundError }
