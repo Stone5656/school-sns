@@ -28,15 +28,6 @@ export const artifacts = new Hono()
         },
         500: {
           description: 'Internal Server Error',
-          content: {
-            'application/json': {
-              schema: resolver(
-                z.object({
-                  message: z.string(),
-                }),
-              ),
-            },
-          },
         },
       },
     }),
@@ -152,15 +143,6 @@ export const artifacts = new Hono()
         },
         403: {
           description: 'Forbidden',
-          content: {
-            'application/json': {
-              schema: resolver(
-                z.object({
-                  message: z.string(),
-                }),
-              ),
-            },
-          },
         },
       },
     }),
@@ -213,7 +195,7 @@ export const artifacts = new Hono()
       }
       return c.json(
         {
-          message: '',
+          message: 'Deletion successful',
         },
         200,
       )
@@ -239,27 +221,9 @@ export const artifacts = new Hono()
         },
         404: {
           description: 'Artifact not found or summarization failed',
-          content: {
-            'application/json': {
-              schema: resolver(
-                z.object({
-                  message: z.string(),
-                }),
-              ),
-            },
-          },
         },
         500: {
           description: 'Internal Server Error',
-          content: {
-            'application/json': {
-              schema: resolver(
-                z.object({
-                  message: z.string(),
-                }),
-              ),
-            },
-          },
         },
       },
     }),

@@ -28,15 +28,6 @@ export const scraps = new Hono<{ Variables: AuthVariables }>()
         },
         500: {
           description: 'Internal Server Error',
-          content: {
-            'application/json': {
-              schema: resolver(
-                z.object({
-                  message: z.string(),
-                }),
-              ),
-            },
-          },
         },
       },
     }),
@@ -82,15 +73,6 @@ export const scraps = new Hono<{ Variables: AuthVariables }>()
         },
         500: {
           description: 'Internal Server Error',
-          content: {
-            'application/json': {
-              schema: resolver(
-                z.object({
-                  message: z.string(),
-                }),
-              ),
-            },
-          },
         },
       },
     }),
@@ -133,15 +115,6 @@ export const scraps = new Hono<{ Variables: AuthVariables }>()
         },
         500: {
           description: 'Internal Server Error',
-          content: {
-            'application/json': {
-              schema: resolver(
-                z.object({
-                  message: z.string(),
-                }),
-              ),
-            },
-          },
         },
       },
     }),
@@ -176,15 +149,6 @@ export const scraps = new Hono<{ Variables: AuthVariables }>()
         },
         500: {
           description: 'Internal Server Error',
-          content: {
-            'application/json': {
-              schema: resolver(
-                z.object({
-                  message: z.string(),
-                }),
-              ),
-            },
-          },
         },
       },
     }),
@@ -235,15 +199,6 @@ export const scraps = new Hono<{ Variables: AuthVariables }>()
         },
         500: {
           description: 'Internal Server Error',
-          content: {
-            'application/json': {
-              schema: resolver(
-                z.object({
-                  message: z.string(),
-                }),
-              ),
-            },
-          },
         },
       },
     }),
@@ -263,7 +218,7 @@ export const scraps = new Hono<{ Variables: AuthVariables }>()
       }
       return c.json(
         {
-          message: '',
+          message: 'Deletion successful',
         },
         200,
       )
