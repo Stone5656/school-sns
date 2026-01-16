@@ -17,7 +17,7 @@ const getTagsQuerySchema = z
 
 const addTagSchema = z.object({
   name: z.string(),
-  slug: z.string(),
+  slug: z.string().nullable().default(null),
 })
 
 const updateTagSchema = z.object({

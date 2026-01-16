@@ -128,7 +128,7 @@ model Comments {
 model Tags {
   id String @id @default(uuid(4))
   name String @unique
-  slug String @unique
+  slug String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
