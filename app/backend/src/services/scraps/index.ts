@@ -8,21 +8,29 @@ import type { ScrapOptions } from './type.js'
 
 export const scrapsService = {
   getScraps: async (
-    options?: Omit<ScrapOptions, 'userIds'>,
+    options?: ScrapOptions & { tagIds?: string[] },
     followingUserFilter?: { userId: string },
   ) => {
-    const query: ScrapOptions = {
+    const userIds =
+      followingUserFilter !== undefined
+        ? (
+            await scrapsRepository.getFollowingUserIds(
+              followingUserFilter.userId,
+            )
+          ).map(({ followeeId }) => followeeId)
+        : undefined
+
+    const ids = options?.tagIds
+      ? (await scrapsRepository.getScrapIdsByTagIds(options.tagIds)).map(
+          ({ scrapId }) => scrapId,
+        )
+      : undefined
+
+    const scraps = await scrapsRepository.getScraps({
       ...options,
-      userIds:
-        followingUserFilter !== undefined
-          ? (
-              await scrapsRepository.getFollowingUserIds(
-                followingUserFilter.userId,
-              )
-            ).map(({ followeeId }) => followeeId)
-          : undefined,
-    }
-    const scraps = await scrapsRepository.getScraps(query)
+      userIds,
+      ids,
+    })
     return Result.succeed(scraps)
   },
   getScrapById: async (scrapId: string) => {

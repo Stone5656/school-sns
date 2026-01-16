@@ -9,10 +9,13 @@ export const scrapsRepository = {
       where: { followerId: userId },
     })
   },
-  getScraps: async (options: ScrapOptions = {}) => {
+  getScraps: async (
+    options: ScrapOptions & { ids?: string[]; userIds?: string[] } = {},
+  ) => {
     return await prisma.scraps.findMany({
       where: {
-        userId: { in: options.userIds },
+        id: options.ids ? { in: options.ids } : undefined,
+        userId: options.userIds ? { in: options.userIds } : undefined,
       },
       take: options.limit,
       skip:

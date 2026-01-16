@@ -28,6 +28,12 @@ const getScrapsQuerySchema = z
     isFollowing: z
       .preprocess((val) => val === 'true', z.boolean())
       .default(false),
+    tagIds: z
+      .preprocess(
+        (val) => (typeof val === 'string' ? [val] : val),
+        z.array(z.string()),
+      )
+      .optional(),
     limit: z.coerce.number().min(1).optional(),
     page: z.coerce.number().min(1).optional(),
   })
