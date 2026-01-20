@@ -12,6 +12,7 @@
     "prisma:gen": "prisma generate",
     "prisma:std": "prisma studio --config ./prisma.config.ts --port 51212",
     "test": "vitest run",
+    "test:pre": "DATABASE_URL=\"file:./database/test.db\" npx prisma db push --accept-data-loss",
     "test:cov": "vitest run --coverage"
   },
   "dependencies": {
