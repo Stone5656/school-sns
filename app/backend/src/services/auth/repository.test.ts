@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach } from 'vitest'
 import { UserRole } from '../../../generated/prisma/enums.js'
 import { prisma } from '../../lib/prisma.js'
 import { createTestUser } from '../../testing/factories.js'
@@ -9,7 +8,9 @@ describe('AuthRepository', () => {
 
   // 各テスト実行前にDBをクリーンアップして独立性を保つ
   beforeEach(async () => {
-    await prisma.users.deleteMany()
+    await prisma.userRelationships.deleteMany() // 子
+    await prisma.artifacts.deleteMany() // 子
+    await prisma.users.deleteMany() // 親
   })
 
   describe('createUser', () => {
