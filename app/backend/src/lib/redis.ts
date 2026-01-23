@@ -32,17 +32,16 @@ const redisClient = new ioredis.Redis({
     return delay
   },
 })
-const redisMockClient = new Redis.redisMock({
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+const redisMockClient = new Redis({
+  // このRedisはコンスラクト可能ではないと言われるがコンストラクタです。
   host: 'redis',
   port: 6379,
   db: 0,
   keyPrefix: 'app:',
-
-  retryStrategy: (times) => {
-    const delay = Math.min(times * 50, 2000)
-    return delay
-  },
-})
+}) as ioredis.Redis // Redis-mock自体がデフォルトでコンストラクタらしいからRedisを返せます
 
 export const redis = isTest ? redisMockClient : redisClient
 
