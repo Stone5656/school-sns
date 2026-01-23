@@ -23,5 +23,7 @@ sed -i 's/\r$//' ./.devcontainer/scripts/setup.sh
 
 ```bash
 # 強制的にリセットしてマイグレーションを再実行するコマンド
-prisma migrate reset --force
+cd app/backend
+pnpm prisma migrate reset
+# ? Are you sure you want to reset your database? All data will be lost. › (y/N) と聞かれたら y を押して実行する
 ```
