@@ -24,7 +24,6 @@ const EnvSchema = z.object({
     .nullable()
     .transform((val) => Number(val) || null),
   LLM_PROVIDER: z.enum(['fake', 'gemini']).default('fake'),
-  REDIS_URL: z.string().optional(),
   GOOGLE_ID: z.string(),
   GOOGLE_SECRET: z.string(),
 })
