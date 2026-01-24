@@ -1,7 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import logo from '../logo.svg'
 
 export const Route = createFileRoute('/')({
+  loader: () => {
+    throw redirect({
+      to: '/timeline/scraps',
+    })
+  },
   component: App,
 })
 
