@@ -33,6 +33,14 @@ const authResponseSchema = z.object({
   user: userResponseSchema,
 })
 
-export { signupSchema, loginSchema, authResponseSchema }
+const googleLoginInputSchema = z.object({
+  googleId: z.string(),
+  email: z.email(),
+  name: z.string().nullable(),
+  picture: z.string().nullable(),
+})
+
+export { signupSchema, loginSchema, authResponseSchema, googleLoginInputSchema }
 export type SignupInput = z.infer<typeof signupSchema>
 export type LoginInput = z.infer<typeof loginSchema>
+export type GoogleLoginInput = z.infer<typeof googleLoginInputSchema>

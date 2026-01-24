@@ -1,5 +1,11 @@
-import 'dotenv/config'
+import { config } from 'dotenv'
 import { z } from 'zod'
+
+// テスト環境の際、envを切り替える
+const envFile = process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
+
+// 明示的に読み込む
+config({ path: envFile })
 
 class EnvError extends Error {
   constructor(message: string) {
@@ -18,6 +24,8 @@ const EnvSchema = z.object({
     .nullable()
     .transform((val) => Number(val) || null),
   LLM_PROVIDER: z.enum(['fake', 'gemini']).default('fake'),
+  GOOGLE_ID: z.string(),
+  GOOGLE_SECRET: z.string(),
 })
 
 const validateEnv = () => {
