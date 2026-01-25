@@ -1,12 +1,6 @@
 import { Link, useMatches } from '@tanstack/react-router'
-import {
-  FileText,
-  LayoutGrid,
-  
-  Search,
-  User
-} from 'lucide-react'
-import type {LucideIcon} from 'lucide-react';
+import { FileText, LayoutGrid, Search, User } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import type { AppPath } from '@/types'
 import { cn } from '@/utils/cn'
 
@@ -43,7 +37,7 @@ const Footer: React.FC = () => {
   const matches = useMatches()
 
   return (
-    <footer className="w-full h-15 bg-slate-100 flex items-center justify-between px-5 py-2 border-t border-slate-400/20">
+    <footer className="w-full h-15 bg-slate-50 flex items-center justify-between px-5 py-2 border-t border-slate-400/20">
       {footerItems.map((item) => (
         <Link
           to={item.path}

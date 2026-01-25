@@ -28,15 +28,15 @@ export default function Header() {
       from: '/timeline/scraps/',
       shouldThrow: false,
     }) !== undefined
-  const isAuthPage =
-    (useMatch({
-      from: '/auth/login/',
-      shouldThrow: false,
-    }) ??
-      useMatch({
-        from: '/auth/signup/',
-        shouldThrow: false,
-      })) !== undefined
+  const loginMatch = useMatch({
+    from: '/auth/login/',
+    shouldThrow: false,
+  })
+  const signupMatch = useMatch({
+    from: '/auth/signup/',
+    shouldThrow: false,
+  })
+  const isAuthPage = (loginMatch ?? signupMatch) !== undefined
 
   const currentTitle = HeaderTitles.find((item) =>
     matches.some(
@@ -48,7 +48,7 @@ export default function Header() {
   return (
     <header
       className={cn(
-        'bg-slate-100 px-2 py-2 flex items-center shadow-sm h-15 overflow-y-clip',
+        'bg-slate-50 px-2 py-2 flex items-center shadow h-15 overflow-y-clip',
         isAuthPage ? 'justify-center' : 'justify-between',
       )}
     >
