@@ -1,4 +1,6 @@
+import { useQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
+import { useFetchSelfInfoOptions } from '@/api/routes/users'
 import AccountSettings from '@/features/settings/components/AccountSettings'
 import LogoutSection from '@/features/settings/components/LogoutSection'
 import ProfileSection from '@/features/settings/components/ProfileSection'
@@ -9,7 +11,12 @@ export const Route = createLazyFileRoute('/settings/')({
 })
 
 export function SettingsPage() {
-  const data = Route.useLoaderData()
+  const initialData = Route.useLoaderData()
+  const { data } = useQuery({
+    ...useFetchSelfInfoOptions(),
+    initialData,
+    staleTime: 60_000,
+  })
 
   return (
     <div className="min-h-full bg-slate-50 text-slate-900">
