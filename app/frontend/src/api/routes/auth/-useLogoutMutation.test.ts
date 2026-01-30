@@ -4,7 +4,6 @@ import { usersKeys } from '@/api/routes/users/key'
 import { ApiError } from '@/api/shared/error'
 
 const invalidateQueries = vi.fn()
-const navigate = vi.fn()
 let capturedOptions: any
 
 vi.mock('@tanstack/react-query', () => {
@@ -25,12 +24,6 @@ vi.mock('@tanstack/react-query', () => {
   }
 })
 
-vi.mock('@tanstack/react-router', () => {
-  return {
-    useNavigate: () => navigate,
-  }
-})
-
 const logoutMock = vi.fn()
 
 vi.mock('@/api/shared/apiClient', () => {
@@ -46,7 +39,7 @@ vi.mock('@/api/shared/apiClient', () => {
 })
 
 describe('useLogoutMutation', () => {
-  it('logs out and redirects to login on success', async () => {
+  it('logs out and invalidates cache on success', async () => {
     logoutMock.mockResolvedValue({
       ok: true,
       json: () => Promise.resolve({}),
@@ -59,7 +52,6 @@ describe('useLogoutMutation', () => {
     expect(invalidateQueries).toHaveBeenCalledWith({
       queryKey: usersKeys.me(),
     })
-    expect(navigate).toHaveBeenCalledWith({ to: '/auth/login' })
   })
 
   it('throws ApiError on failure', async () => {

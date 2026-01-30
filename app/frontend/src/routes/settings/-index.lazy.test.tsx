@@ -12,7 +12,7 @@ const userData = vi.hoisted(() => ({
 }))
 
 const mutateAsync = vi.fn().mockResolvedValue({})
-const logoutAsync = vi.fn().mockResolvedValue({})
+const logoutMutate = vi.fn()
 
 vi.mock('@tanstack/react-router', async () => {
   const { createLazyFileRouteMock } = await import('@/testing/routerMocks')
@@ -34,7 +34,7 @@ vi.mock('@/api/routes/users', () => {
 
 vi.mock('@/api/routes/auth', () => {
   return {
-    useLogoutMutation: () => ({ mutateAsync: logoutAsync, isPending: false }),
+    useLogoutMutation: () => ({ mutate: logoutMutate, isPending: false }),
   }
 })
 

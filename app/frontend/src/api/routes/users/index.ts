@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query'
 import { usersKeys } from '@/api/routes/users/key'
 import { apiClient } from '@/api/shared/apiClient'
-import { parseApiResponse } from '@/api/shared/error'
+import { ensureOk } from '@/api/shared/error'
 
 type UpdateProfileInput = {
   userName?: string
@@ -23,9 +23,10 @@ export type SelfInfo = {
 const useFetchSelfInfoOptions = () =>
   queryOptions({
     queryKey: usersKeys.me(),
-    queryFn: async () => {
+    queryFn: async (): Promise<SelfInfo> => {
       const res = await apiClient.users.me.$get()
-      return await parseApiResponse<SelfInfo>(res)
+      const response = await ensureOk(res)
+      return await response.json()
     },
   })
 
@@ -35,7 +36,8 @@ const useUpdateProfileMutation = () => {
   return useMutation({
     mutationFn: async (body: UpdateProfileInput) => {
       const res = await apiClient.users.me.$patch({ json: body })
-      return await parseApiResponse(res)
+      const response = await ensureOk(res)
+      return await response.json()
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: usersKeys.me() })

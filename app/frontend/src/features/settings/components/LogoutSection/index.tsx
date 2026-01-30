@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import ConfirmDialog from '@/features/settings/components/ConfirmDialog'
 import { useLogoutMutation } from '@/api/routes/auth'
 
 const LogoutSection: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const navigate = useNavigate()
   const logoutMutation = useLogoutMutation()
 
   return (
@@ -26,9 +28,13 @@ const LogoutSection: React.FC = () => {
         cancelLabel="キャンセル"
         variant="danger"
         isLoading={logoutMutation.isPending}
-        onConfirm={async () => {
-          await logoutMutation.mutateAsync()
-          setIsDialogOpen(false)
+        onConfirm={() => {
+          logoutMutation.mutate(undefined, {
+            onSuccess: () => {
+              setIsDialogOpen(false)
+              navigate({ to: '/auth/login' })
+            },
+          })
         }}
         onCancel={() => setIsDialogOpen(false)}
       />

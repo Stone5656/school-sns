@@ -1,3 +1,5 @@
+import z from 'zod'
+
 export class ApiError extends Error {
   statusCode: number
 
@@ -8,24 +10,22 @@ export class ApiError extends Error {
   }
 }
 
-const isErrorPayload = (data: unknown): data is { message: string } => {
-  return (
-    typeof data === 'object' &&
-    data !== null &&
-    'message' in data &&
-    typeof (data as { message: unknown }).message === 'string'
-  )
-}
+const errorResponseSchema = z.object({
+  message: z.string(),
+})
 
-export const parseApiResponse = async <T>(res: Response): Promise<T> => {
+export const parseApiError = async (res: Response): Promise<never> => {
   const data = (await res.json()) as unknown
+  const parsed = errorResponseSchema.safeParse(data)
 
-  if (!res.ok) {
-    if (isErrorPayload(data)) {
-      throw new ApiError(data.message, res.status)
-    }
-    throw new ApiError('An unknown error occurred', res.status)
+  if (parsed.success) {
+    throw new ApiError(parsed.data.message, res.status)
   }
 
-  return data as T
+  throw new ApiError('An unknown error occurred', res.status)
+}
+
+export const ensureOk = async (res: Response): Promise<Response> => {
+  if (!res.ok) return await parseApiError(res)
+  return res
 }
