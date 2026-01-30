@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { useFetchSelfInfoOptions } from '@/api/routes/users'
 import AccountSettings from '@/features/settings/components/AccountSettings'
@@ -11,12 +11,7 @@ export const Route = createLazyFileRoute('/settings/')({
 })
 
 export function SettingsPage() {
-  const initialData = Route.useLoaderData()
-  const { data } = useQuery({
-    ...useFetchSelfInfoOptions(),
-    initialData,
-    staleTime: 60_000,
-  })
+  const { data } = useSuspenseQuery(useFetchSelfInfoOptions())
 
   return (
     <div className="min-h-full bg-slate-50 text-slate-900">

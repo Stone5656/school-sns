@@ -1,4 +1,4 @@
-import { Camera, ChevronRight, PencilLine, UserRound } from 'lucide-react'
+import { ChevronRight, PencilLine, UserRound } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import ProfileEditForm from '@/features/settings/components/ProfileEditForm'
 
@@ -65,14 +65,6 @@ const ProfileSection: React.FC<Props> = ({ user }) => {
           <div className="h-36 w-36 overflow-hidden rounded-full border-4 border-white bg-amber-50 shadow-xl">
             {avatarContent}
           </div>
-          <button
-            type="button"
-            onClick={() => setIsEditing(true)}
-            className="absolute bottom-2 right-2 flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-slate-900 text-white shadow-md transition-colors hover:bg-slate-800 active:scale-95"
-            aria-label="プロフィールを編集"
-          >
-            <PencilLine className="h-4 w-4" />
-          </button>
         </div>
         <h2 className="mb-1 text-2xl font-bold text-slate-900">
           {user.userName}
@@ -96,30 +88,20 @@ const ProfileSection: React.FC<Props> = ({ user }) => {
           <button
             type="button"
             onClick={() => setIsEditing(true)}
-            className="flex w-full items-center justify-between border-b border-slate-100 p-4 transition-colors hover:bg-slate-50 active:bg-slate-100"
-          >
-            <div className="flex items-center gap-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 text-sky-600 shadow-sm">
-                <Camera className="h-5 w-5" />
-              </div>
-              <span className="text-base font-medium text-slate-900">
-                アイコンを変更
-              </span>
-            </div>
-            <ChevronRight className="h-4 w-4 text-slate-400" />
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsEditing(true)}
             className="flex w-full items-center justify-between p-4 transition-colors hover:bg-slate-50 active:bg-slate-100"
           >
             <div className="flex items-center gap-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 text-rose-600 shadow-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600 shadow-sm">
                 <PencilLine className="h-5 w-5" />
               </div>
-              <span className="text-base font-medium text-slate-900">
-                自己紹介を編集
-              </span>
+              <div className="flex flex-col items-start">
+                <span className="text-base font-medium text-slate-900">
+                  プロフィールを編集
+                </span>
+                <span className="text-xs text-slate-500">
+                  アイコン・ユーザー名・自己紹介をまとめて編集
+                </span>
+              </div>
             </div>
             <ChevronRight className="h-4 w-4 text-slate-400" />
           </button>

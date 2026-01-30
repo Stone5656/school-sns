@@ -1,3 +1,5 @@
+import { cn } from '@/utils/cn'
+
 interface ConfirmDialogProps {
   isOpen: boolean
   title: string
@@ -23,11 +25,6 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 }) => {
   if (!isOpen) return null
 
-  const confirmStyle =
-    variant === 'danger'
-      ? 'bg-red-500 text-white hover:bg-red-600'
-      : 'bg-black text-white hover:bg-gray-800'
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
@@ -48,7 +45,13 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
               type="button"
               onClick={onConfirm}
               disabled={isLoading}
-              className={`rounded-md px-4 py-2 text-sm font-semibold transition-colors ${confirmStyle} ${isLoading ? 'opacity-70' : ''}`}
+              className={cn(
+                'rounded-md px-4 py-2 text-sm font-semibold transition-colors',
+                variant === 'danger'
+                  ? 'bg-red-500 text-white hover:bg-red-600'
+                  : 'bg-black text-white hover:bg-gray-800',
+                isLoading && 'opacity-70',
+              )}
             >
               {isLoading ? '処理中...' : confirmLabel}
             </button>
