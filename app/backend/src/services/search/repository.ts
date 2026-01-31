@@ -3,10 +3,6 @@ import { prisma } from '../../lib/prisma.js'
 export const searchRepository = {
   findArtifactsByKeyword: async (keyword: string) => {
     return await prisma.artifacts.findMany({
-      select: {
-        id: true,
-        title: true,
-      },
       where: {
         OR: [
           {
@@ -47,10 +43,6 @@ export const searchRepository = {
   },
   findScrapsByKeyword: async (keyword: string) => {
     return await prisma.scraps.findMany({
-      select: {
-        id: true,
-        title: true,
-      },
       where: {
         OR: [
           {
