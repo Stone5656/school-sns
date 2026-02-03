@@ -43,7 +43,24 @@ export const scrapsRepository = {
     return await prisma.scraps.findUnique({
       where: { id: scrapId },
       include: {
-        scraps: true,
+        scraps: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                userName: true,
+                avatarUrl: true,
+              },
+            },
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            userName: true,
+            avatarUrl: true,
+          },
+        },
       },
     })
   },
