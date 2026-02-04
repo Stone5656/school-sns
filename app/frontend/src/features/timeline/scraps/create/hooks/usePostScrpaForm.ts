@@ -1,9 +1,9 @@
 import { useNavigate } from '@tanstack/react-router'
-import { usePostScrap } from '@/api/routes/scraps'
+import { usePostScrapMutation } from '@/api/routes/scraps'
 import { useScrapForm } from '@/features/timeline/scraps/hooks/useScrapForm'
 
 export const usePostScrapForm = (replyToScrapId: string | null = null) => {
-  const mutation = usePostScrap()
+  const mutation = usePostScrapMutation()
   const navigate = useNavigate()
 
   return useScrapForm({
