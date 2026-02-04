@@ -1,12 +1,13 @@
 import type { useScrapForm } from '@/features/timeline/scraps/hooks/useScrapForm'
 import type React from 'react'
+import type { Tag } from '@/features/timeline/types'
 import Button from '@/components/ui/Button'
 import FilterTag from '@/components/ui/FilterTag'
 import Editor from '@/features/timeline/components/Editor'
 
 interface Props {
   form: ReturnType<typeof useScrapForm>['form']
-  tags: Array<{ id: string; name: string }>
+  tags: Array<Tag>
   submitLabel?: string
 }
 

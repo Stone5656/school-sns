@@ -4,4 +4,9 @@ interface Owner {
   name: string
 }
 
-export type { Owner }
+interface Tag {
+  id: string
+  name: string
+}
+
+export type { Owner, Tag }
