@@ -39,6 +39,20 @@ export const artifactsRepository = {
   getArtifactById: async (artifactId: string) => {
     return await prisma.artifacts.findUnique({
       where: { id: artifactId },
+      include: {
+        user: {
+          select: {
+            id: true,
+            userName: true,
+            avatarUrl: true,
+          },
+        },
+        tagArtifacts: {
+          select: {
+            tagId: true,
+          },
+        },
+      },
     })
   },
   addArtifact: async (
