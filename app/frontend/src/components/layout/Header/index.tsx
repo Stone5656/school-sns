@@ -43,6 +43,14 @@ export default function Header() {
     shouldThrow: false,
   })
   const isAuthPage = (loginMatch ?? signupMatch) !== undefined
+  
+  const searchMatch = useMatch({
+    from: '/search',
+    shouldThrow: false,
+  })
+  const isSearchPage = searchMatch !== undefined
+
+  if (isSearchPage) return null
 
   const currentTitle = HeaderTitles.find((item) =>
     matches.some(

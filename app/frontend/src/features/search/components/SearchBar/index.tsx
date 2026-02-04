@@ -1,5 +1,7 @@
-import { Search, X } from 'lucide-react'
-import { useEffect } from 'react'
+import { FileText, LayoutGrid } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import FilterTag from '@/components/ui/FilterTag'
+import SearchInput from '@/components/ui/SearchInput'
 import { useSearchForm } from '@/features/search/hooks/useSearchForm'
 
 interface Props {
@@ -7,62 +9,63 @@ interface Props {
   keyword: string | null
 }
 
-const SearchBar: React.FC<Props> = ({ placeholder = 'Search...', keyword }) => {
+const TABS = [
+  { label: 'すべて' },
+  { label: 'ユーザー' },
+  { label: 'タグ' },
+  { label: 'Artifacts', icon: <LayoutGrid className="w-4 h-4" /> },
+  { label: 'Scraps', icon: <FileText className="w-4 h-4" /> },
+]
+
+const SearchBar: React.FC<Props> = ({
+  placeholder = '投稿、タグ、ユーザーを検索',
+  keyword,
+}) => {
   const { form } = useSearchForm({ keyword })
+  const [selectedTab, setSelectedTab] = useState('すべて')
 
   useEffect(() => {
     form.setFieldValue('keyword', keyword)
   }, [keyword])
-
+  
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        form.handleSubmit()
-      }}
-      className="flex w-full gap-4"
-    >
-      <form.Field name="keyword">
-        {(field) => (
-          <div className="flex w-full items-center gap-2 bg-slate-300 px-4 py-2 rounded-md">
-            <div className="flex gap-3 flex-1 items-center">
-              <Search className="h-6 w-6 text-slate-700" />
-              <input
-                type="text"
-                id={field.name}
-                name={field.name}
-                value={field.state.value ?? ''}
-                onChange={(e) =>
-                  field.handleChange(
-                    e.target.value === '' ? null : e.target.value,
-                  )
-                }
-                placeholder={placeholder}
-                className="w-full bg-transparent outline-none text-slate-900 placeholder:text-slate-700"
-              />
-            </div>
-            {field.state.value && (
-              <button
-                type="button"
-                onClick={() => field.handleChange(null)}
-                className="text-slate-700 hover:text-slate-900 transition-colors"
-                aria-label="Clear search"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            )}
-          </div>
-        )}
-      </form.Field>
-      <form.Subscribe selector={(state) => [state.canSubmit]}>
-        {([canSubmit]) => (
-          <button type="submit" disabled={!canSubmit} aria-label="Search">
-            <span className="text-nowrap text-md">検索</span>
-          </button>
-        )}
-      </form.Subscribe>
-    </form>
+    <div className="flex flex-col gap-2 w-full">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          form.handleSubmit()
+        }}
+        className="flex w-full gap-2 items-center"
+      >
+        <form.Field name="keyword">
+          {(field) => (
+            <SearchInput
+              value={field.state.value ?? ''}
+              onChange={(val) =>
+                field.handleChange(val === '' ? null : val)
+              }
+              onClear={() => field.handleChange(null)}
+              placeholder={placeholder}
+              containerClassName="flex-1"
+            />
+          )}
+        </form.Field>
+      </form>
+
+      <div className="flex gap-2 overflow-x-auto scrollbar-hidden">
+        {TABS.map((tab) => (
+          <FilterTag
+            key={tab.label}
+            label={tab.label}
+            icon={tab.icon}
+            isSelected={selectedTab === tab.label}
+            onClick={() => setSelectedTab(tab.label)}
+            className="whitespace-nowrap"
+          />
+        ))}
+      </div>
+    </div>
   )
 }
 
