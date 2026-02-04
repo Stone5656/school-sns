@@ -1,5 +1,5 @@
 import { Result } from '@praha/byethrow'
-import { isPublished } from '../../lib/filterPublished.js'
+import { isPublished } from '../../lib/typeCheckFilter.js'
 import { searchRepository } from './repository.js'
 import type { SearchResult, SearchType } from './type.js'
 

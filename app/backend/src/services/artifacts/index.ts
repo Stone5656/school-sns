@@ -1,7 +1,7 @@
 import { Result } from '@praha/byethrow'
 import type { Artifacts } from '../../../generated/prisma/sqlserver/index.js'
-import { isPublished } from '../../lib/filterPublished.js'
 import { summarizePost } from '../../lib/langchain/index.js'
+import { isPublished } from '../../lib/typeCheckFilter.js'
 import { TagNotFoundError } from '../tags/error.js'
 import { tagsRepository } from '../tags/repository.js'
 import {
