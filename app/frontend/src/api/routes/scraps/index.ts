@@ -83,7 +83,7 @@ const useUpdateScrapMutation = (id: string) => {
         return parseApiError(res)
       }
 
-      return null
+      return await res.json()
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
