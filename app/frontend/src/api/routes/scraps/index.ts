@@ -45,8 +45,9 @@ const useFetchScrapDetailOptions = (id: string) =>
     },
   })
 
-const usePostScrap = () => {
+const usePostScrapMutation = () => {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: async (body: PostScrapRequestBody) => {
       const res = await apiClient.scraps.$post({
@@ -66,8 +67,9 @@ const usePostScrap = () => {
   })
 }
 
-const useUpdateScrap = (id: string) => {
+const useUpdateScrapMutation = (id: string) => {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: async (body: UpdateScrapRequestBody) => {
       const res = await apiClient.scraps[':scrapId'].$patch({
@@ -80,9 +82,13 @@ const useUpdateScrap = (id: string) => {
       if (!res.ok) {
         return parseApiError(res)
       }
-      return await res.json()
+
+      return null
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: scrapsKeys.lists(),
+      })
       queryClient.invalidateQueries({
         queryKey: scrapsKeys.detail(id),
       })
@@ -92,6 +98,7 @@ const useUpdateScrap = (id: string) => {
 
 const useDeleteScrap = (id: string) => {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: async () => {
       const res = await apiClient.scraps[':scrapId'].$delete({
@@ -109,6 +116,9 @@ const useDeleteScrap = (id: string) => {
       queryClient.invalidateQueries({
         queryKey: scrapsKeys.lists(),
       })
+      queryClient.invalidateQueries({
+        queryKey: scrapsKeys.detail(id),
+      })
     },
   })
 }
@@ -116,7 +126,7 @@ const useDeleteScrap = (id: string) => {
 export {
   useFetchScrapsOptions,
   useFetchScrapDetailOptions,
-  usePostScrap,
-  useUpdateScrap,
+  usePostScrapMutation,
+  useUpdateScrapMutation,
   useDeleteScrap,
 }
