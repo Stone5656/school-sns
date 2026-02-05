@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest'
 import { prisma } from '../../lib/prisma.js'
 import { createTestUser } from '../../testing/factories.js'
 import { searchRepository } from './repository.js'

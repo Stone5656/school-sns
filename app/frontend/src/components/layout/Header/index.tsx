@@ -43,7 +43,7 @@ export default function Header() {
     shouldThrow: false,
   })
   const isAuthPage = (loginMatch ?? signupMatch) !== undefined
-  
+
   const searchMatch = useMatch({
     from: '/search',
     shouldThrow: false,

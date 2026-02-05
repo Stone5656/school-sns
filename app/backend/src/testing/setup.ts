@@ -10,6 +10,7 @@ export const cleanupDatabase = async () => {
   await prisma.$transaction([
     prisma.oAuthConnection.deleteMany(),
     prisma.tagScraps.deleteMany(),
+    prisma.tagArtifacts.deleteMany(),
     prisma.userRelationships.deleteMany(),
     prisma.artifacts.deleteMany(),
     prisma.scraps.deleteMany(),

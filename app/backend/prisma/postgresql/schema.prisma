@@ -176,7 +176,7 @@ model Mentions {
 
 model TagScraps {
   id String @id @default(uuid(4))
-  scrap Scraps @relation(fields: [scrapId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  scrap Scraps @relation(fields: [scrapId], references: [id], onDelete: Cascade)
   scrapId String
   tag Tags @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId String
