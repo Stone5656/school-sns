@@ -12,7 +12,7 @@
     "prisma:gen": "dotenv -- sh -c 'pnpm prisma generate --schema=./prisma/${PROVIDER_TYPE:-sqlserver}/schema.prisma'",
     "prisma:seed": "prisma db seed",
     "prisma:std": "dotenv -- sh -c 'pnpm prisma studio --schema=./prisma/${PROVIDER_TYPE:-sqlserver}/schema.prisma --port 51212'",
-    "test": "vitest run",
+    "test": "NODE_ENV=\"test\" vitest run",
     "test:pre": "DATABASE_URL=\"file:./database/test.db\" npx prisma db push --accept-data-loss",
     "test:cov": "vitest run --coverage"
   },
