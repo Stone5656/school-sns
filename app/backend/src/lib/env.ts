@@ -15,25 +15,26 @@ class EnvError extends Error {
 
 const zStrEnv = z.string().min(1, 'is required')
 
-const EnvSchema = z.object({
-  DATABASE_URL: zStrEnv,
-  TOKEN_EXPIRATION_SEC: z
-    .string()
-    .nullable()
-    .transform((val) => Number(val) || null),
-  LLM_PROVIDER: z.enum(['fake', 'gemini']).default('fake'),
-  GOOGLE_ID: z.string(),
-  GOOGLE_SECRET: z.string(),
-  GOOGLE_REDIRECT_URI: z.string(),
-  PROVIDER_TYPE: z.string().default('sqlserver'),
-  ORIGIN_URL: z.string().default('http://localhost:3157'),
-})
-// .transform((env) => {
-//   return {
-//     ...env,
-//     GOOGLE_REDIRECT_URI: `${env.ORIGIN_URL}${env.GOOGLE_REDIRECT_URI}`,
-//   }
-// })
+const EnvSchema = z
+  .object({
+    DATABASE_URL: zStrEnv,
+    TOKEN_EXPIRATION_SEC: z
+      .string()
+      .nullable()
+      .transform((val) => Number(val) || null),
+    LLM_PROVIDER: z.enum(['fake', 'gemini']).default('fake'),
+    GOOGLE_ID: z.string(),
+    GOOGLE_SECRET: z.string(),
+    GOOGLE_REDIRECT_URI: z.string(),
+    PROVIDER_TYPE: z.string().default('sqlserver'),
+    ORIGIN_URL: z.string().default('http://localhost:3157'),
+  })
+  .transform((env) => {
+    return {
+      ...env,
+      GOOGLE_REDIRECT_URI: `${env.ORIGIN_URL}${env.GOOGLE_REDIRECT_URI}`,
+    }
+  })
 
 const validateEnv = () => {
   try {
