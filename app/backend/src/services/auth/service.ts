@@ -1,6 +1,5 @@
 import { Result } from '@praha/byethrow'
 import * as argon2 from 'argon2'
-import { jwt } from '../../lib/jwt.js'
 import type {
   SignupInput,
   LoginInput,
@@ -26,15 +25,8 @@ export const authService = {
     // 3. ユーザー作成
     const user = await authRepository.createUser({ ...input, passwordHash })
 
-    // 4. JWT生成 (共通関数を使用)
-    const token = await jwt.generate({
-      id: user.id,
-      role: user.role,
-    })
-
     // 5. UserResponse型に変換して返却
     return Result.succeed({
-      token,
       user: {
         id: user.id,
         userName: user.userName,
@@ -72,15 +64,8 @@ export const authService = {
       return Result.fail(new InvalidCredentialsError())
     }
 
-    // 3. ★JWT生成 (共通関数を使用)
-    const token = await jwt.generate({
-      id: user.id,
-      role: user.role,
-    })
-
     // 4. UserResponse型に変換して返却
     return Result.succeed({
-      token,
       user: {
         id: user.id,
         userName: user.userName,

@@ -27,7 +27,7 @@ const SearchBar: React.FC<Props> = ({
   useEffect(() => {
     form.setFieldValue('keyword', keyword)
   }, [keyword])
-  
+
   return (
     <div className="flex flex-col gap-2 w-full">
       <form
@@ -42,9 +42,7 @@ const SearchBar: React.FC<Props> = ({
           {(field) => (
             <SearchInput
               value={field.state.value ?? ''}
-              onChange={(val) =>
-                field.handleChange(val === '' ? null : val)
-              }
+              onChange={(val) => field.handleChange(val === '' ? null : val)}
               onClear={() => field.handleChange(null)}
               placeholder={placeholder}
               containerClassName="flex-1"

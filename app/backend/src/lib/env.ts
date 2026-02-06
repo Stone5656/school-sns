@@ -1,8 +1,7 @@
 import { config } from 'dotenv'
 import { z } from 'zod'
 
-// テスト環境の際、envを切り替える
-const envFile = process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
+const envFile = '.env'
 
 // 明示的に読み込む
 config({ path: envFile })
@@ -18,7 +17,6 @@ const zStrEnv = z.string().min(1, 'is required')
 
 const EnvSchema = z.object({
   DATABASE_URL: zStrEnv,
-  JWT_SECRET: zStrEnv,
   TOKEN_EXPIRATION_SEC: z
     .string()
     .nullable()
@@ -27,7 +25,15 @@ const EnvSchema = z.object({
   GOOGLE_ID: z.string(),
   GOOGLE_SECRET: z.string(),
   GOOGLE_REDIRECT_URI: z.string(),
+  PROVIDER_TYPE: z.string().default('sqlserver'),
+  ORIGIN_URL: z.string().default('http://localhost:3157'),
 })
+// .transform((env) => {
+//   return {
+//     ...env,
+//     GOOGLE_REDIRECT_URI: `${env.ORIGIN_URL}${env.GOOGLE_REDIRECT_URI}`,
+//   }
+// })
 
 const validateEnv = () => {
   try {

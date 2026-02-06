@@ -1,7 +1,10 @@
 import { Search, X } from 'lucide-react'
 import { cn } from '@/utils/cn'
 
-interface Props extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+interface Props extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'onChange'
+> {
   value: string
   onChange: (value: string) => void
   onClear?: () => void

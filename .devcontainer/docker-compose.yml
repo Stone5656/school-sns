@@ -34,6 +34,21 @@ services:
     volumes:
       - mssql_data:/var/opt/mssql
 
+  postgres:
+    image: postgres:16-alpine
+    container_name: backend-postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: webapp
+    networks:
+      - dev_network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
 networks:
   dev_network:
     name: dev_network
@@ -42,3 +57,4 @@ networks:
 volumes:
   redis_data:
   mssql_data:
+  postgres_data:

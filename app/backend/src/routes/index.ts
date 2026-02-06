@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { env } from '../lib/env.js'
 import { artifacts } from './artifacts/index.js'
 import { auth } from './auth/index.js'
 import { media } from './media/index.js'
@@ -13,7 +14,7 @@ export const app = new Hono()
   .use(
     '*',
     cors({
-      origin: ['http://localhost:3157'],
+      origin: [env.ORIGIN_URL],
       credentials: true,
     }),
   )
