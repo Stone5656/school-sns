@@ -48,7 +48,7 @@ describe('ArtifactsRepository', () => {
         userId: user.id,
         summaryByAI: null,
         status: 'DRAFT',
-        publishedAt: null,
+        publishedAt: new Date(),
       })
       await repo.addArtifact({
         title: 'A2',
@@ -56,10 +56,11 @@ describe('ArtifactsRepository', () => {
         userId: user.id,
         summaryByAI: null,
         status: 'DRAFT',
-        publishedAt: null,
+        publishedAt: new Date(),
       })
 
       const results = await repo.getArtifacts()
+      console.log(results)
       expect(results).toHaveLength(2)
     })
 
@@ -72,7 +73,7 @@ describe('ArtifactsRepository', () => {
           userId: user.id,
           summaryByAI: null,
           status: 'DRAFT',
-          publishedAt: null,
+          publishedAt: new Date(),
         })
       }
 
@@ -93,7 +94,7 @@ describe('ArtifactsRepository', () => {
         userId: u1.id,
         summaryByAI: null,
         status: 'DRAFT',
-        publishedAt: null,
+        publishedAt: new Date(),
       })
       await repo.addArtifact({
         title: 'U2-A',
@@ -101,7 +102,7 @@ describe('ArtifactsRepository', () => {
         userId: u2.id,
         summaryByAI: null,
         status: 'DRAFT',
-        publishedAt: null,
+        publishedAt: new Date(),
       })
 
       // ID指定

@@ -14,10 +14,16 @@ describe('SearchRepository', () => {
           title: 'TypeScript Tutorial',
           body: 'Content',
           userId: user.id,
+          publishedAt: new Date(),
         },
       })
       await prisma.artifacts.create({
-        data: { title: 'Rust Guide', body: 'Content', userId: user.id },
+        data: {
+          title: 'Rust Guide',
+          body: 'Content',
+          userId: user.id,
+          publishedAt: new Date(),
+        },
       })
 
       const results = await repo.findArtifactsByKeyword('TypeScript')
@@ -32,10 +38,16 @@ describe('SearchRepository', () => {
           title: 'No Match',
           body: 'This is about Python programming',
           userId: user.id,
+          publishedAt: new Date(),
         },
       })
       await prisma.artifacts.create({
-        data: { title: 'No Match', body: 'Just text', userId: user.id },
+        data: {
+          title: 'No Match',
+          body: 'Just text',
+          userId: user.id,
+          publishedAt: new Date(),
+        },
       })
 
       const results = await repo.findArtifactsByKeyword('Python')
