@@ -15,6 +15,7 @@ import { Route as TimelineRouteRouteImport } from './routes/timeline/route'
 import { Route as SearchRouteRouteImport } from './routes/search/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
+import { Route as ProfileIndexRouteImport } from './routes/profile/index'
 import { Route as TimelineScrapsIndexRouteImport } from './routes/timeline/scraps/index'
 import { Route as TimelineArtifactsIndexRouteImport } from './routes/timeline/artifacts/index'
 import { Route as SearchResultIndexRouteImport } from './routes/search/result/index'
@@ -59,6 +60,11 @@ const SettingsIndexRoute = SettingsIndexRouteImport.update({
 } as any).lazy(() =>
   import('./routes/settings/index.lazy').then((d) => d.Route),
 )
+const ProfileIndexRoute = ProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthLoginIndexLazyRoute = AuthLoginIndexLazyRouteImport.update({
   id: '/auth/login/',
   path: '/auth/login/',
@@ -182,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/search': typeof SearchRouteRouteWithChildren
   '/timeline': typeof TimelineRouteRouteWithChildren
+  '/profile/': typeof ProfileIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/search/': typeof SearchIndexLazyRoute
   '/auth/signup/': typeof AuthSignupIndexRoute
@@ -202,6 +209,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/timeline': typeof TimelineRouteRouteWithChildren
+  '/profile': typeof ProfileIndexRoute
   '/settings': typeof SettingsIndexRoute
   '/search': typeof SearchIndexLazyRoute
   '/auth/signup': typeof AuthSignupIndexRoute
@@ -224,6 +232,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/search': typeof SearchRouteRouteWithChildren
   '/timeline': typeof TimelineRouteRouteWithChildren
+  '/profile/': typeof ProfileIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/search/': typeof SearchIndexLazyRoute
   '/auth/signup/': typeof AuthSignupIndexRoute
@@ -247,6 +256,7 @@ export interface FileRouteTypes {
     | '/'
     | '/search'
     | '/timeline'
+    | '/profile/'
     | '/settings/'
     | '/search/'
     | '/auth/signup/'
@@ -267,6 +277,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/timeline'
+    | '/profile'
     | '/settings'
     | '/search'
     | '/auth/signup'
@@ -288,6 +299,7 @@ export interface FileRouteTypes {
     | '/'
     | '/search'
     | '/timeline'
+    | '/profile/'
     | '/settings/'
     | '/search/'
     | '/auth/signup/'
@@ -310,6 +322,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SearchRouteRoute: typeof SearchRouteRouteWithChildren
   TimelineRouteRoute: typeof TimelineRouteRouteWithChildren
+  ProfileIndexRoute: typeof ProfileIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
   AuthSignupIndexRoute: typeof AuthSignupIndexRoute
   AuthLoginIndexLazyRoute: typeof AuthLoginIndexLazyRoute
@@ -353,6 +366,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings/'
       preLoaderRoute: typeof SettingsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof ProfileIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/login/': {
@@ -500,6 +520,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SearchRouteRoute: SearchRouteRouteWithChildren,
   TimelineRouteRoute: TimelineRouteRouteWithChildren,
+  ProfileIndexRoute: ProfileIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
   AuthSignupIndexRoute: AuthSignupIndexRoute,
   AuthLoginIndexLazyRoute: AuthLoginIndexLazyRoute,
