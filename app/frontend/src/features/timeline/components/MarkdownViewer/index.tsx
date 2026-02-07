@@ -2,7 +2,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import './override.css'
 import { cn } from '@/utils/cn'
-import ArtifactInternalLink from '@/features/timeline/components/MarkdownViewer/AritfactInternalLink'
+import ArtifactInternalLink from '@/features/timeline/components/AritfactInternalLink'
 
 interface Props {
   mdSource: string
@@ -20,8 +20,8 @@ const MarkdownViewer: React.FC<Props> = ({ mdSource, className }) => {
           a: (arg) => {
             const { href } = arg
             const artifactInternalLink =
-              href && href.startsWith('/timeline/artifacts')
-                ? href.split('/')[3].replaceAll('/', '').trim()
+              href && href.startsWith('/timeline/artifacts/detail')
+                ? href.split('/')[4].replaceAll('/', '').trim()
                 : null
 
             return artifactInternalLink !== null ? (
