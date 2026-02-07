@@ -1,5 +1,7 @@
 {
 	"name": "school-sns-backend",
 	"compatibility_date": "2026-02-07",
-	"main": "./dist/src/routes/index.js"
+	"assets": {
+		"directory": "./dist"
+	}
 }
