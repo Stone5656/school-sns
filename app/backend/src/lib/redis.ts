@@ -1,5 +1,4 @@
-import ioredis from 'ioredis'
-import Redis from 'ioredis-mock'
+import { Redis } from 'ioredis'
 
 // ---------------------------------------------------------
 // 型定義: IDとデータをひとまとめにする
@@ -14,13 +13,11 @@ export interface Session<T = Record<string, unknown>> {
   data: T
 }
 
-const isTest = process.env.NODE_ENV === 'test'
-
 // ---------------------------------------------------------
 // 1. Redisクライアントの初期化
 // ---------------------------------------------------------
 
-const redisClient = new ioredis.Redis({
+const redisClient = new Redis({
   host: 'redis',
   port: 6379,
   db: 0,
@@ -33,17 +30,7 @@ const redisClient = new ioredis.Redis({
   },
 })
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-const redisMockClient = new Redis({
-  // このRedisはコンスラクト可能ではないと言われるがコンストラクタです。
-  host: 'redis',
-  port: 6379,
-  db: 0,
-  keyPrefix: 'app:',
-}) as ioredis.Redis // Redis-mock自体がデフォルトでコンストラクタらしいからRedisを返せます
-
-export const redis = isTest ? redisMockClient : redisClient
+export const redis = redisClient
 
 // ---------------------------------------------------------
 // 2. セッション管理用の関数群
