@@ -3,7 +3,10 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query'
-import type { UpdateUserRequestSchema } from '@/api/routes/users/type'
+import type {
+  FetchUserContentsQuerySchema,
+  UpdateUserRequestSchema,
+} from '@/api/routes/users/type'
 import { usersKeys } from '@/api/routes/users/key'
 import { apiClient } from '@/api/shared/apiClient'
 import { parseApiError } from '@/api/shared/error'
@@ -37,4 +40,27 @@ const useUpdateProfileMutation = () => {
   })
 }
 
-export { useFetchSelfInfoOptions, useUpdateProfileMutation }
+const useFetchUserContentsOptions = (
+  userId: string,
+  query?: FetchUserContentsQuerySchema,
+) =>
+  queryOptions({
+    queryKey: usersKeys.content(userId, query),
+    queryFn: async () => {
+      const res = await apiClient.users[':userId'].contents.$get({
+        param: { userId },
+        query,
+      })
+
+      if (!res.ok) {
+        return await parseApiError(res)
+      }
+      return await res.json()
+    },
+  })
+
+export {
+  useFetchSelfInfoOptions,
+  useUpdateProfileMutation,
+  useFetchUserContentsOptions,
+}

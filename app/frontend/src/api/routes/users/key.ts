@@ -6,4 +6,7 @@ export const usersKeys = {
     [...usersKeys.lists(), { query }] as const,
   details: () => [...usersKeys.all, 'details'] as const,
   detail: (id: string) => [...usersKeys.details(), id] as const,
+  contents: () => [...usersKeys.all, 'contents'] as const,
+  content: (userId: string, query?: Record<string, unknown>) =>
+    [...usersKeys.contents(), userId, { query }] as const,
 }
