@@ -1,5 +1,6 @@
 import { Result } from '@praha/byethrow'
 import type { Scraps } from '../../../generated/prisma/index.js'
+import { toTags } from '../../lib/formatter.js'
 import { TagNotFoundError } from '../tags/error.js'
 import { tagsRepository } from '../tags/repository.js'
 import { NotScrapOwnerError, ScrapNotFoundError } from './error.js'
@@ -26,13 +27,15 @@ export const scrapsService = {
         )
       : undefined
 
-    const scraps = await scrapsRepository.getScraps({
-      ...options,
-      onlyRootScraps: options?.onlyRootScraps ?? true,
-      includeUserInfo: options?.includeUserInfo ?? true,
-      userIds,
-      ids,
-    })
+    const scraps = (
+      await scrapsRepository.getScraps({
+        ...options,
+        onlyRootScraps: options?.onlyRootScraps ?? true,
+        userIds,
+        ids,
+      })
+    ).map((scrap) => toTags(scrap))
+
     return Result.succeed(scraps)
   },
   getScrapById: async (scrapId: string) => {
@@ -40,7 +43,7 @@ export const scrapsService = {
     if (scrap === null) {
       return Result.fail(new ScrapNotFoundError(scrapId))
     }
-    return Result.succeed(scrap)
+    return Result.succeed(toTags(scrap))
   },
   deleteScrap: async (scrapId: string, userId: string) => {
     if (!(await scrapsRepository.isOwnScrap(scrapId, userId))) {
