@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { Palette } from 'lucide-react'
+import Divider from '@/components/layout/Divider'
 import Avatar from '@/components/ui/Avatar'
 import CountViewer from '@/features/profile/components/CountViewer'
 
@@ -57,7 +58,7 @@ const UserOverview: React.FC<Props> = ({
         >
           <CountViewer label="Followers" count={followersCount} />
         </Link>
-        <div className="w-px bg-slate-200" />
+        <Divider orientation="vertical" />
         <Link
           to="/profile/$id/$userName/following"
           params={{ id, userName }}
@@ -65,7 +66,7 @@ const UserOverview: React.FC<Props> = ({
         >
           <CountViewer label="Following" count={followingCount} />
         </Link>
-        <div className="w-px bg-slate-200" />
+        <Divider orientation="vertical" />
         <div className="flex-1">
           <CountViewer label="Artifacts" count={artifactsCount} />
         </div>

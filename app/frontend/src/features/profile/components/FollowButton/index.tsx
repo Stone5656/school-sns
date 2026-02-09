@@ -27,6 +27,14 @@ const FollowButton: React.FC<Props> = ({
       : 'Follow'
   const Icon = isFollowing ? UserCheck : UserPlus
 
+  const buttonClasses = cn(
+    'text-sm font-bold rounded-lg flex items-center justify-center gap-2 h-10 transition-colors',
+    isFollowing
+      ? 'bg-slate-100 text-slate-700 border border-slate-300 hover:bg-slate-200'
+      : 'bg-sky-500 hover:bg-sky-500/90 text-white',
+    className,
+  )
+
   return (
     <Button
       onClick={() => {
@@ -37,10 +45,7 @@ const FollowButton: React.FC<Props> = ({
         }
       }}
       disabled={isPending}
-      className={cn(
-        'w-full bg-sky-500 hover:bg-sky-500/90 text-white text-sm font-bold rounded-lg flex items-center justify-center gap-2 h-10',
-        className,
-      )}
+      className={buttonClasses}
       aria-busy={isPending}
     >
       <Icon className="h-4 w-4" />

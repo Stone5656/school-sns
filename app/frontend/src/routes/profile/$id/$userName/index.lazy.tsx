@@ -15,6 +15,7 @@ import FollowButton from '@/features/profile/components/FollowButton'
 import ArtifactPreview from '@/components/ui/ArtifactPreview'
 import ScrapPreview from '@/components/ui/ScrapPreview'
 import Popover from '@/components/layout/Popover'
+import { useShareProfile } from '@/features/profile/hooks/useShareProfile'
 
 export const Route = createLazyFileRoute('/profile/$id/$userName/')({
   component: RouteComponent,
@@ -47,28 +48,7 @@ function RouteComponent() {
   const isFollowing = followers.some((user) => user.id === accessUserId)
   const isSelfProfile = accessUserId === userInfo.id
 
-  const handleShare = async () => {
-    if (typeof window === 'undefined') return
-    const url = window.location.href
-    const shareApi = (
-      navigator as {
-        share?: (data: ShareData) => Promise<void>
-      }
-    ).share
-    const clipboardApi = (navigator as { clipboard?: Clipboard }).clipboard
-    try {
-      if (shareApi) {
-        await shareApi({
-          title: `${userInfo.userName}のプロフィール`,
-          url,
-        })
-      } else if (clipboardApi) {
-        await clipboardApi.writeText(url)
-      }
-    } catch {
-      // Ignore share errors and keep UI quiet.
-    }
-  }
+  const handleShare = useShareProfile(userInfo.userName)
 
   const displayContents = (): React.ReactNode => {
     if (contents === null) {
@@ -127,7 +107,7 @@ function RouteComponent() {
             <FollowButton
               targetUserId={userInfo.id}
               isFollowing={isFollowing}
-              className="flex-1 bg-sky-500 hover:bg-sky-500/90 text-white text-sm font-bold rounded-lg flex items-center justify-center gap-2 h-10"
+              className="flex-1"
             />
           )}
           <button

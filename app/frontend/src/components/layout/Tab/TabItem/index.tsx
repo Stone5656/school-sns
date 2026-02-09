@@ -10,10 +10,10 @@ const TabItem: React.FC<Props> = ({ label, isActive, className }) => {
   return (
     <div
       className={cn(
-        'relative flex-1 cursor-pointer select-none text-nowrap text-center text-sm font-semibold py-3 transition-colors',
+        'flex-1 cursor-pointer select-none text-nowrap text-center text-sm font-semibold py-3 border-b-2 transition-colors',
         isActive
-          ? 'text-sky-600 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-sky-500 after:rounded-t-sm'
-          : 'text-slate-500 hover:text-slate-800 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-transparent hover:after:bg-sky-200',
+          ? 'text-sky-600 border-sky-500'
+          : 'text-slate-500 border-transparent hover:text-slate-800 hover:border-sky-200',
         className,
       )}
     >
