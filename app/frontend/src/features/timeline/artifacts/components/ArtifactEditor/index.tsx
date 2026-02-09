@@ -17,6 +17,7 @@ interface Props {
 const ArtifactEditor: React.FC<Props> = ({ form, tags }) => {
   const bodyEditor = useCreateBlockNote({
     dictionary: ja,
+    placeholder: 'テキストを入力してください',
   })
 
   return (
@@ -58,7 +59,7 @@ const ArtifactEditor: React.FC<Props> = ({ form, tags }) => {
               staticFormattingToolbar
               sideMenu={false}
               slashMenu={true}
-              className="min-h-full overflow-y-auto"
+              className="overflow-y-auto"
             />
           )}
         </form.Field>

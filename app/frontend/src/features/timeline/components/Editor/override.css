@@ -190,3 +190,13 @@
 .editor .bn-floating-toolbar-wrapper {
   position: relative !important;
 }
+
+/* Set minimum height for the editor content area */
+.editor .bn-editor,
+.editor .ProseMirror {
+  min-height: 300px !important;
+}
+
+.editor .bn-block-outer {
+  min-height: auto;
+}

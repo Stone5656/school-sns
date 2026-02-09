@@ -16,6 +16,7 @@ interface Props {
 const ScrapEditor: React.FC<Props> = ({ form, tags, submitLabel = '投稿' }) => {
   const bodyEditor = useCreateBlockNote({
     dictionary: ja,
+    placeholder: 'テキストを入力してください',
   })
 
   return (
@@ -59,7 +60,7 @@ const ScrapEditor: React.FC<Props> = ({ form, tags, submitLabel = '投稿' }) =>
               staticFormattingToolbar
               sideMenu={false}
               slashMenu={false}
-              className="max-h-full overflow-y-auto"
+              className="overflow-y-auto"
             />
           </div>
         )}
