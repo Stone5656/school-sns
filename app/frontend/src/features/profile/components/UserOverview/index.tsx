@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router'
-import { Palette } from 'lucide-react'
 import Divider from '@/components/layout/Divider'
 import Avatar from '@/components/ui/Avatar'
 import CountViewer from '@/features/profile/components/CountViewer'
@@ -33,9 +32,6 @@ const UserOverview: React.FC<Props> = ({
               alt={userName}
               className="h-20 w-20 border-2 border-white"
             />
-          </div>
-          <div className="absolute -bottom-1 -right-1 rounded-full border border-slate-200 bg-white p-1 shadow-sm">
-            <Palette className="h-4 w-4 text-sky-500" />
           </div>
         </div>
         <div className="flex flex-col gap-1">
