@@ -1,4 +1,4 @@
-import type { ArtifactFilter } from './types'
+export type ArtifactFilter = 'newest' | 'popular' | 'design' | 'engineering'
 
 const ARTIFACT_FILTERS = ['newest', 'popular', 'design', 'engineering'] as const
 
