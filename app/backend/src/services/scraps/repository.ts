@@ -12,7 +12,6 @@ export const scrapsRepository = {
   getScraps: async (
     options: ScrapOptions & { ids?: string[]; userIds?: string[] } = {
       onlyRootScraps: true,
-      includeUserInfo: true,
     },
   ) => {
     return await prisma.scraps.findMany({
@@ -26,25 +25,53 @@ export const scrapsRepository = {
         options.page && options.limit
           ? (options.page - 1) * options.limit
           : undefined,
-      include: {
-        user: options.includeUserInfo
-          ? {
+      select: {
+        id: true,
+        body: true,
+        createdAt: true,
+        updatedAt: true,
+        parentId: true,
+        _count: {
+          select: {
+            scraps: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            userName: true,
+            avatarUrl: true,
+          },
+        },
+        tagScraps: {
+          select: {
+            tag: {
               select: {
                 id: true,
-                userName: true,
-                avatarUrl: true,
+                name: true,
               },
-            }
-          : undefined,
+            },
+          },
+        },
       },
     })
   },
   getScrapById: async (scrapId: string) => {
     return await prisma.scraps.findUnique({
       where: { id: scrapId },
-      include: {
+      select: {
+        id: true,
+        body: true,
+        title: true,
+        createdAt: true,
+        updatedAt: true,
         scraps: {
-          include: {
+          select: {
+            id: true,
+            body: true,
+            title: true,
+            createdAt: true,
+            updatedAt: true,
             user: {
               select: {
                 id: true,
@@ -61,7 +88,16 @@ export const scrapsRepository = {
             avatarUrl: true,
           },
         },
-        tagScraps: { select: { tagId: true } },
+        tagScraps: {
+          select: {
+            tag: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
     })
   },

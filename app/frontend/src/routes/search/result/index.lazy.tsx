@@ -37,7 +37,7 @@ function RouteComponent() {
             key={a.id}
             artifact={a}
             owner={{
-              id: a.userId,
+              id: a.user.id,
               name: a.user.userName,
               avatarUrl: a.user.avatarUrl,
             }}
@@ -50,9 +50,15 @@ function RouteComponent() {
             scrap={{
               id: s.id,
               content: s.body,
+              createdAt:
+                (s as { createdAt?: string }).createdAt ??
+                new Date().toISOString(),
+              likeCount: (s as { _count?: { likes: number } })._count?.likes,
+              commentCount: (s as { _count?: { scraps: number } })._count
+                ?.scraps,
             }}
             owner={{
-              id: s.userId,
+              id: s.user.id,
               name: s.user.userName,
               avatarUrl: s.user.avatarUrl,
             }}

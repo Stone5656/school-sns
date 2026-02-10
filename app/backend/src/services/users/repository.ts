@@ -89,31 +89,8 @@ export const usersRepository = {
     return await prisma.users.findFirst({
       where: { id: userId },
       select: {
-        scraps:
-          options?.type === undefined || options.type === 'scraps'
-            ? {
-                select: {
-                  id: true,
-                  title: true,
-                  createdAt: true,
-                },
-              }
-            : undefined,
-        artifacts:
-          options?.type === undefined || options.type === 'artifacts'
-            ? {
-                where: options?.onlyPublished
-                  ? {
-                      publishedAt: { not: null },
-                    }
-                  : undefined,
-                select: {
-                  id: true,
-                  title: true,
-                  publishedAt: true,
-                },
-              }
-            : undefined,
+        scraps: options?.type === undefined || options.type === 'scraps',
+        artifacts: options?.type === undefined || options.type === 'artifacts',
       },
     })
   },
