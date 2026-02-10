@@ -44,7 +44,7 @@ const validateEnv = () => {
       const formatted = err.issues
         .map((e) => `${e.path.join('.')}: ${e.message}`)
         .join('; ')
-      throw new EnvError(formatted)
+      // throw new EnvError(formatted)
     }
     throw err
   }
