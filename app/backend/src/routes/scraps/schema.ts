@@ -39,9 +39,6 @@ const getScrapsQuerySchema = z
     onlyRootScraps: z
       .preprocess((val) => val === 'true', z.boolean())
       .default(true),
-    includeUserInfo: z
-      .preprocess((val) => val === 'true', z.boolean())
-      .default(true),
   })
   .optional()
 
