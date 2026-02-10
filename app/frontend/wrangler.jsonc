@@ -1,6 +1,7 @@
 {
 	"name": "sns-school",
 	"compatibility_date": "2026-02-07",
+	"node_compat": true,
 	"assets": {
 		"directory": "./dist"
 	}
