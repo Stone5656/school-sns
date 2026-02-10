@@ -44,6 +44,7 @@ const validateEnv = () => {
       const formatted = err.issues
         .map((e) => `${e.path.join('.')}: ${e.message}`)
         .join('; ')
+      console.error('Environment validation failed:', formatted)
       // throw new EnvError(formatted)
     }
     throw err
