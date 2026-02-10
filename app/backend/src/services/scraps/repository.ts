@@ -31,6 +31,11 @@ export const scrapsRepository = {
         createdAt: true,
         updatedAt: true,
         parentId: true,
+        _count: {
+          select: {
+            scraps: true,
+          },
+        },
         user: {
           select: {
             id: true,
