@@ -1,7 +1,7 @@
 import { createClient } from 'backend/src/createClient'
 
 export const apiBaseUrl =
-  process.env.REACT_API_BASE_URL || 'http://localhost:3000'
+  process.env.REACT_API_BASE_URL || 'httpd://school-sns-backend.jo-yasuda-dev.workers.dev'
 
 type FetchAPIParams = Parameters<typeof fetch>
 
