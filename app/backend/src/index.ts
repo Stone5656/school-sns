@@ -7,7 +7,10 @@ export const app = new Hono()
   .use(
     '*',
     cors({
-      origin: ['http://localhost:3157'],
+      origin: 'https://school-sns.jo-yasuda-dev.workers.dev',
+      allowMethods: ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE'],
+      allowHeaders: ['Content-Type', 'Authorization'],
+      credentials: true,
     }),
   )
   .get('/', (c) => {
