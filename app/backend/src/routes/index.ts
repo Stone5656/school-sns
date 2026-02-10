@@ -14,7 +14,7 @@ export const app = new Hono()
   .use(
     '*',
     cors({
-      origin: [env.ORIGIN_URL],
+      origin: 'https://school-sns.jo-yasuda-dev.workers.dev',
       credentials: true,
     }),
   )
