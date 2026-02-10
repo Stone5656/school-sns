@@ -6,12 +6,12 @@ const envFile = '.env'
 // 明示的に読み込む
 config({ path: envFile })
 
-class EnvError extends Error {
-  constructor(message: string) {
-    super(`Environment Variable Error: ${message}`)
-    this.name = 'EnvError'
-  }
-}
+// class EnvError extends Error {
+//   constructor(message: string) {
+//     super(`Environment Variable Error: ${message}`)
+//     this.name = 'EnvError'
+//   }
+// }
 
 const zStrEnv = z.string().min(1, 'is required')
 
