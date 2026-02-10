@@ -1,7 +1,7 @@
 import { createClient } from 'backend/src/createClient'
 
 export const apiBaseUrl =
-  import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'
+  process.env.VITE_API_BASE_URL || 'http://localhost:3000'
 
 type FetchAPIParams = Parameters<typeof fetch>
 
