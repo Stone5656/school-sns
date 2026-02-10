@@ -79,6 +79,10 @@ function RouteComponent() {
             scrap={{
               id: s.id,
               content: s.body,
+              createdAt: s.createdAt,
+              likeCount: (s as { _count?: { likes: number } })._count?.likes,
+              commentCount: (s as { _count?: { scraps: number } })._count
+                ?.scraps,
             }}
             owner={{
               id: userInfo.id,
